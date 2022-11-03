@@ -1,21 +1,19 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const userController = require('./../controllers/userController');
+const authController = require('./../controllers/authController');
 
-const routeHit = (req, res, next) => {
-  return res.status(200).send("hit");
-};
+router.post('/auth/signUp', authController.signUp);
+router.post('/auth/logIn', authController.logIn);
 
-router.post("/auth/signUp", routeHit);
-router.post("/auth/logIn", routeHit);
-router.post("/auth/logOut", routeHit);
+router.route('/').get(userController.getUsers);
 
-// get all users
-router.route("/").get(routeHit);
+router
+  .route('/user/:userName')
+  .get(userController.getUserByUserName)
+  .put(userController.updateUser)
+  .delete(userController.deleteUser);
 
-// user by username endpoints
-router.route("/user/:userName").get(routeHit).put(routeHit).delete(routeHit);
-
-// search user by userName by substring
-router.route("/search/:userNameKey").get(routeHit);
+router.route('/search/:userNameKey').get(userController.getSpecificUsers);
 
 module.exports = router;

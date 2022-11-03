@@ -1,11 +1,12 @@
 const userService = require('./../services/userService');
 
-exports.signUp = (req, res, next) => {
-  return res.status(200).json({});
+exports.signUp = async (req, res, next) => {
+  const userToCreate = req.body;
+  const createdUser = await userService.createUser(userToCreate);
+
+  return res.status(200).json(createdUser);
 };
-exports.logIn = (req, res, next) => {
-  return res.status(200).json({});
-};
-exports.logOut = (req, res, next) => {
+
+exports.logIn = async (req, res, next) => {
   return res.status(200).json({});
 };
