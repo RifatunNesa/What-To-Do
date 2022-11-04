@@ -50,7 +50,7 @@ exports.createUser = async (userCreateData) => {
 
 exports.updateUser = async (userName, userUpdateData) => {
   if (!userName) throw new BadRequestError('User name not valid');
-  userUpdateData = userUpdateDataValidation.validateUserUpdateData;
+  userUpdateData = userUpdateDataValidation.validateUserUpdateData(userUpdateData);
   const updatedUser = await userRepository.updateUser(userName, userUpdateData);
   const response = userDataVaidation.validateUserData(updatedUser);
 

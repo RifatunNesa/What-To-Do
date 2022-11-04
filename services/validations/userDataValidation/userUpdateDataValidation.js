@@ -4,7 +4,7 @@ exports.validateUserUpdateData = (userUpdatedata) => {
   const { fullName, email, password, confirmPassword } = userUpdatedata;
   const emailRegex = /^\w+@\w+\.\w+$/;
 
-  if (email || !emailRegex.test(email)) throw new BadRequestError('Email not valid');
+  if (email && !emailRegex.test(email)) throw new BadRequestError('Email not valid');
 
   if (password && confirmPassword) {
     if (password !== confirmPassword) throw new BadRequestError('Both password fields must match');
