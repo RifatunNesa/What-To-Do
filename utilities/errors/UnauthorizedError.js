@@ -4,6 +4,7 @@ class UnauthorizedError extends Error {
     super(message);
     this.statusCode = 401;
     this.status = 'fail';
+    this.isCustomError = true;
     Error.captureStackTrace(this, this.constructor);
   }
 }

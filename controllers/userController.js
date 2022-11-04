@@ -1,42 +1,71 @@
 const userService = require('./../services/userService');
+const sendRespponse = require('./../utilities/responseHandler');
 
 exports.getUserByUserName = async (req, res, next) => {
-  const userName = req.params.userName;
-  const user = await userService.getUserByUserName(userName);
+  try {
+    const userName = req.params.userName;
+    const user = await userService.getUserByUserName(userName);
 
-  return res.status(200).json(user);
+    return sendRespponse(req, res, 200, user, 'User Found', 'success');
+  } catch (error) {
+    next(error);
+  }
 };
 
 exports.getUsers = async (req, res, next) => {
-  const users = await userService.getUsers();
+  try {
+    const users = await userService.getUsers();
 
-  return res.status(200).json(users);
+    return sendRespponse(req, res, 200, users, 'Users Found', 'success');
+  } catch (error) {
+    next(error);
+  }
 };
 
 exports.getSpecificUsers = async (req, res, next) => {
-  const userNameKey = req.params.userNameKey;
-  const users = await userService.getSpecificUsers(userNameKey);
+  try {
+    const userNameKey = req.params.userNameKey;
+    const users = await userService.getSpecificUsers(userNameKey);
 
-  return res.status(200).json(users);
+    return sendRespponse(req, res, 200, users, 'Users Found', 'success');
+  } catch (error) {
+    next(error);
+  }
 };
 
+/*
 exports.createUser = async (req, res, next) => {
-  const userToCreate = req.body;
-  const createdUser = await userService.createUser(userToCreate);
+  try {
+    const userToCreate = req.body;
+    const createdUser = await userService.createUser(userToCreate);
+    return sendRespponse(req, res, 200, users, 'Users Found', 'success');
 
-  return res.status(201).json(createdUser);
+    return res.status(201).json(createdUser);
+  } catch (error) {
+    next(error);
+  }
 };
+*/
 
 exports.updateUser = async (req, res, next) => {
-  const userToUpdate = req.body;
-  const userName = req.params.userName;
-  const updatedUser = await userService.updateUser(userName, userToUpdate);
+  try {
+    const userToUpdate = req.body;
+    const userName = req.params.userName;
+    const updatedUser = await userService.updateUser(userName, userToUpdate);
 
-  return res.status(200).json(updatedUser);
+    return sendRespponse(req, res, 200, updatedUser, 'Update Successful', 'success');
+  } catch (error) {
+    next(error);
+  }
 };
 
 exports.deleteUser = async (req, res, next) => {
-  const userName = req.params.userName;
-  await userService.deleteUser(userName);
-  return res.status(204).json({});
+  try {
+    const userName = req.params.userName;
+    await userService.deleteUser(userName);
+
+    return sendRespponse(req, res, 204, {}, 'Delete Successful', 'success');
+  } catch (error) {
+    next(error);
+  }
 };

@@ -4,6 +4,7 @@ class NotFoundError extends Error {
     super(message);
     this.statusCode = 404;
     this.status = 'fail';
+    this.isCustomError = true;
     Error.captureStackTrace(this, this.constructor);
   }
 }

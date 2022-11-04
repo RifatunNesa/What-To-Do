@@ -4,6 +4,7 @@ class ForbiddenError extends Error {
     super(message);
     this.statusCode = 403;
     this.status = 'fail';
+    this.isCustomError = true;
     Error.captureStackTrace(this, this.constructor);
   }
 }

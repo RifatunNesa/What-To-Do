@@ -1,10 +1,15 @@
 const userService = require('./../services/userService');
+const sendResponse = require('./../utilities/responseHandler');
 
 exports.signUp = async (req, res, next) => {
-  const userToCreate = req.body;
-  const createdUser = await userService.createUser(userToCreate);
+  try {
+    const userToCreate = req.body;
+    const createdUser = await userService.createUser(userToCreate);
 
-  return res.status(200).json(createdUser);
+    return sendResponse(req, res, 201, createdUser, 'User created', 'success');
+  } catch (error) {
+    next(error);
+  }
 };
 
 exports.logIn = async (req, res, next) => {

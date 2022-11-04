@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const User = require('../database/models/User');
+const NotFoundError = require('./../utilities/errors/NotFoundError');
 
 exports.getUserByUserName = async (userName) => {
   const user = await User.findOne({
@@ -79,7 +80,7 @@ exports.updateUser = async (userName, userToUpdate) => {
       userName,
     },
   });
-
+  if (!user) throw new NotFoundError('User not found');
   const updatedUser = await user.update(userToUpdate);
 
   return updatedUser.dataValues;
@@ -91,6 +92,7 @@ exports.deleteUser = async (userName) => {
       userName,
     },
   });
+  if (!user) throw new NotFoundError('User not found');
   await user.destroy();
 
   return;
