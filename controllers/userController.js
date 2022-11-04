@@ -33,25 +33,11 @@ exports.getSpecificUsers = async (req, res, next) => {
   }
 };
 
-/*
-exports.createUser = async (req, res, next) => {
-  try {
-    const userToCreate = req.body;
-    const createdUser = await userService.createUser(userToCreate);
-    return sendRespponse(req, res, 200, users, 'Users Found', 'success');
-
-    return res.status(201).json(createdUser);
-  } catch (error) {
-    next(error);
-  }
-};
-*/
-
 exports.updateUser = async (req, res, next) => {
   try {
-    const userToUpdate = req.body;
+    const userUpdateData = req.body;
     const userName = req.params.userName;
-    const updatedUser = await userService.updateUser(userName, userToUpdate);
+    const updatedUser = await userService.updateUser(userName, userUpdateData);
 
     return sendRespponse(req, res, 200, updatedUser, 'Update Successful', 'success');
   } catch (error) {

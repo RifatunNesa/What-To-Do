@@ -80,7 +80,6 @@ exports.updateUser = async (userName, userToUpdate) => {
       userName,
     },
   });
-  if (!user) throw new NotFoundError('User not found');
   const updatedUser = await user.update(userToUpdate);
 
   return updatedUser.dataValues;
@@ -92,7 +91,6 @@ exports.deleteUser = async (userName) => {
       userName,
     },
   });
-  if (!user) throw new NotFoundError('User not found');
   await user.destroy();
 
   return;

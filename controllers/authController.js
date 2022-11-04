@@ -3,8 +3,8 @@ const sendResponse = require('./../utilities/responseHandler');
 
 exports.signUp = async (req, res, next) => {
   try {
-    const userToCreate = req.body;
-    const createdUser = await userService.createUser(userToCreate);
+    const userCreateData = req.body;
+    const createdUser = await userService.createUser(userCreateData);
 
     return sendResponse(req, res, 201, createdUser, 'User created', 'success');
   } catch (error) {
