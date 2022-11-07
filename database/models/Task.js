@@ -12,12 +12,10 @@ const Task = db.define(
     name: {
       type: Sequelize.STRING(255),
       allowNull: false,
-      unique: true,
     },
     description: {
       type: Sequelize.STRING(255),
       allowNull: false,
-      unique: true,
     },
     isDone: {
       type: Sequelize.BOOLEAN,
