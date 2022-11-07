@@ -50,6 +50,8 @@ exports.createUser = async (userCreateData) => {
 
 exports.updateUser = async (userName, userUpdateData) => {
   if (!userName) throw new BadRequestError('User name not valid');
+  const user = await userRepository.getUserByUserName(userName);
+  if (!user) throw new NotFoundError('User not found');
   userUpdateData = userUpdateDataValidation.validateUserUpdateData(userUpdateData);
   const updatedUser = await userRepository.updateUser(userName, userUpdateData);
   const response = userDataVaidation.validateUserData(updatedUser);
@@ -59,5 +61,7 @@ exports.updateUser = async (userName, userUpdateData) => {
 
 exports.deleteUser = async (userName) => {
   if (!userName) throw new BadRequestError('User name not valid');
+  const user = await userRepository.getUserByUserName(userName);
+  if (!user) throw new NotFoundError('User not found');
   await userRepository.deleteUser(userName);
 };

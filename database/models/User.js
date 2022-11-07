@@ -24,7 +24,7 @@ const User = db.define(
       unique: true,
     },
     password: {
-      type: Sequelize.STRING(255),
+      type: Sequelize.STRING(1023),
       allowNull: false,
     },
     passwordChangedAt: {
