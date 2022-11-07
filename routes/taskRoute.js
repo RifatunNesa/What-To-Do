@@ -1,22 +1,15 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const taskController = require('./../controllers/taskController');
 
-const routeHit = (req, res, next) => {
-  return res.status(200).send("hit");
-};
+router.route('/task').get(taskController.getTasks).post(taskController.createTask);
 
-// get all tasks
-router.route("/").get(routeHit);
-
-// task by taskId endpoints
 router
-  .route("/task/:taskId")
-  .post(routeHit)
-  .get(routeHit)
-  .put(routeHit)
-  .delete(routeHit);
+  .route('/task/:id')
+  .get(taskController.getTaskById)
+  .put(taskController.updateTask)
+  .delete(taskController.deleteTask);
 
-// get all task of a user
-router.route("/user/:userId").get(routeHit);
+router.route('/user/:userId').get(taskController.getTasksByUserId);
 
 module.exports = router;

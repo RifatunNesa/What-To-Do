@@ -9,7 +9,12 @@ const Task = db.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    taskName: {
+    name: {
+      type: Sequelize.STRING(255),
+      allowNull: false,
+      unique: true,
+    },
+    description: {
       type: Sequelize.STRING(255),
       allowNull: false,
       unique: true,
