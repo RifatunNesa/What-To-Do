@@ -19,9 +19,9 @@ exports.validateUserUpdateData = (userUpdatedata) => {
   }
 
   const response = {};
-  if (fullName) userToUpdate.fullName = fullName;
-  if (email) userToUpdate.email = email;
-  if (password) userToUpdate.password = password;
+  if (fullName) response.fullName = fullName;
+  if (email) response.email = email;
+  if (password) response.password = password;
 
   return response;
 };
