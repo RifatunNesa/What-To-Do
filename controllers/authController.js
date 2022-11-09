@@ -1,4 +1,5 @@
 const userService = require('./../services/userService');
+const authService = require('./../services/authService');
 const jwtHandler = require('./../utilities/jwtHandler');
 const sendResponse = require('./../utilities/responseHandler');
 
@@ -18,7 +19,7 @@ exports.signUp = async (req, res, next) => {
 exports.logIn = async (req, res, next) => {
   try {
     const { userName, password } = req.body;
-    await userService.validatePassword(userName, password);
+    await authService.validatePassword(userName, password);
 
     const user = await userService.getUserByUserName(userName);
     const { id } = user;
