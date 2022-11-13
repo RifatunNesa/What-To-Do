@@ -36,7 +36,8 @@ exports.getTasksByUserName = async (req, res, next) => {
 exports.createTask = async (req, res, next) => {
   try {
     const taskToCreate = req.body;
-    const createdTask = await taskService.createTask(taskToCreate);
+    const currentUser = req.currentUser;
+    const createdTask = await taskService.createTask(taskToCreate, currentUser);
 
     return sendResponse(req, res, 201, createdTask, 'Task Created', 'success');
   } catch (error) {
