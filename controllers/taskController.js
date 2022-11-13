@@ -22,10 +22,10 @@ exports.getTasks = async (req, res, next) => {
   }
 };
 
-exports.getTasksByUserId = async (req, res, next) => {
+exports.getTasksByUserName = async (req, res, next) => {
   try {
-    const userId = req.params.userId;
-    const tasks = await taskService.getTasksByUserId(userId);
+    const userName = req.params.userName;
+    const tasks = await taskService.getTasksByUserName(userName);
 
     return sendResponse(req, res, 200, tasks, 'Tasks Found', 'success');
   } catch (error) {

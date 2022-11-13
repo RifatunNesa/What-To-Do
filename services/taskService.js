@@ -21,9 +21,9 @@ exports.getTasks = async () => {
   return responses;
 };
 
-exports.getTasksByUserId = async (userId) => {
-  if (!userId) throw new BadRequestError('User id not valid');
-  const tasks = await taskRepository.getTasksByUserId(userId);
+exports.getTasksByUserName = async (userName) => {
+  if (!userName) throw new BadRequestError('User name not valid');
+  const tasks = await taskRepository.getTasksByUserName(userName);
   const responses = tasks.map((task) => taskDataValidation.validateTaskData(task));
 
   return responses;
@@ -31,6 +31,13 @@ exports.getTasksByUserId = async (userId) => {
 
 exports.createTask = async (taskToCreate) => {
   const taskCreateData = taskCreateDataValidation.validateTaskCreateData(taskToCreate);
+
+  const currentTime = new Date();
+  taskCreateData.createdOn = currentTime;
+  taskCreateData.modifiedOn = currentTime;
+  taskCreateData.userId = 1;
+  taskCreateData.userName = 'testname';
+
   const createdTask = await taskRepository.createTask(taskCreateData);
   const response = taskDataValidation.validateTaskData(createdTask);
 
@@ -42,6 +49,10 @@ exports.updateTask = async (id, taskToUpdate) => {
   const task = await taskRepository.getTaskById(id);
   if (!task) throw new NotFoundError('Task not found');
   const taskUpdateData = taskUpdateDataValidation.validateTaskUpdateData(taskToUpdate);
+
+  const currentTime = new Date();
+  taskUpdateData.createdOn = currentTime;
+
   const updatedTask = await taskRepository.updateTask(id, taskUpdateData);
   const response = taskDataValidation.validateTaskData(updatedTask);
 

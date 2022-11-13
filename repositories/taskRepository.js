@@ -26,10 +26,10 @@ exports.getTasksCount = async () => {
   return taskCount[0].dataValues.id_count;
 };
 
-exports.getTasksByUserId = async (userId) => {
+exports.getTasksByUserName = async (userName) => {
   const tasks = await Task.findAll({
     where: {
-      userId,
+      userName,
     },
   });
   const tasksData = tasks.map((el) => el.dataValues);
@@ -37,11 +37,11 @@ exports.getTasksByUserId = async (userId) => {
   return tasksData;
 };
 
-exports.getTasksByUserIdCount = async (userId) => {
+exports.getTasksByUserNameCount = async (userName) => {
   const taskCount = await Task.findAll({
     attributes: [[Sequelize.fn('COUNT', Sequelize.col('id')), 'id_count']],
     where: {
-      userId,
+      userName,
     },
   });
 
