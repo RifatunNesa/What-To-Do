@@ -1,5 +1,6 @@
 const taskService = require('./../services/taskService');
 const sendResponse = require('./../utilities/responseHandler');
+const helperMethods = require('./../utilities/helperMethods');
 
 exports.getTaskById = async (req, res, next) => {
   try {
@@ -25,7 +26,8 @@ exports.getTasks = async (req, res, next) => {
 exports.getTasksByUserName = async (req, res, next) => {
   try {
     const userName = req.params.userName;
-    const tasks = await taskService.getTasksByUserName(userName);
+    const { pageSize, pageNumber } = helperMethods.paginationHelper(req.query);
+    const tasks = await taskService.getTasksByUserName(userName, pageSize, pageNumber);
 
     return sendResponse(req, res, 200, tasks, 'Tasks Found', 'success');
   } catch (error) {

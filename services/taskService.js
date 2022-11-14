@@ -14,19 +14,37 @@ exports.getTaskById = async (id) => {
   return response;
 };
 
-exports.getTasks = async () => {
-  const tasks = await taskRepository.getTasks();
-  const responses = tasks.map((task) => taskDataValidation.validateTaskData(task));
+exports.getTasks = async (pageSize, pageNumber) => {
+  const tasks = await taskRepository.getTasks(pageSize, pageNumber);
+  const tasksCount = await taskRepository.getTasksCount();
+  const totalPage = parseInt((Number(tasksCount) + pageSize - 1) / pageSize);
+  const validatedTasks = tasks.map((task) => taskDataValidation.validateTaskData(task));
 
-  return responses;
+  const response = {
+    data: validatedTasks,
+    pageNumber,
+    pageSize,
+    totalPage,
+  };
+
+  return response;
 };
 
-exports.getTasksByUserName = async (userName) => {
+exports.getTasksByUserName = async (userName, pageSize, pageNumber) => {
   if (!userName) throw new BadRequestError('User name not valid');
-  const tasks = await taskRepository.getTasksByUserName(userName);
-  const responses = tasks.map((task) => taskDataValidation.validateTaskData(task));
+  const tasks = await taskRepository.getTasksByUserName(userName, pageSize, pageNumber);
+  const tasksCount = await taskRepository.getTasksByUserNameCount(userName);
+  const totalPage = parseInt((Number(tasksCount) + pageSize - 1) / pageSize);
+  const validatedTasks = tasks.map((task) => taskDataValidation.validateTaskData(task));
 
-  return responses;
+  const response = {
+    data: validatedTasks,
+    pageNumber,
+    pageSize,
+    totalPage,
+  };
+
+  return response;
 };
 
 exports.createTask = async (taskToCreate, currentUser) => {

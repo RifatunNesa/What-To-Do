@@ -1,18 +1,19 @@
+const Sequelize = require('sequelize');
 const Task = require('./../database/models/Task');
 
 exports.getTaskById = async (id) => {
   const task = await Task.findOne({
-    where: {
-      id,
-    },
+    where: { id },
   });
 
   if (!task) return null;
   return task.dataValues;
 };
 
-exports.getTasks = async () => {
-  const tasks = await Task.findAll();
+exports.getTasks = async (pageSize, pageNumber) => {
+  const offset = (pageNumber - 1) * pageSize;
+  const limit = pageSize;
+  const tasks = await Task.findAll({ offset, limit });
   const tasksData = tasks.map((el) => el.dataValues);
 
   return tasksData;
@@ -26,11 +27,13 @@ exports.getTasksCount = async () => {
   return taskCount[0].dataValues.id_count;
 };
 
-exports.getTasksByUserName = async (userName) => {
+exports.getTasksByUserName = async (userName, pageSize, pageNumber) => {
+  const offset = (pageNumber - 1) * pageSize;
+  const limit = pageSize;
   const tasks = await Task.findAll({
-    where: {
-      userName,
-    },
+    offset,
+    limit,
+    where: { userName },
   });
   const tasksData = tasks.map((el) => el.dataValues);
 
@@ -56,9 +59,7 @@ exports.createTask = async (taskToCreate) => {
 
 exports.updateTask = async (id, taskToUpdate) => {
   const task = await Task.findOne({
-    where: {
-      id,
-    },
+    where: { id },
   });
   const updatedTask = await task.update(taskToUpdate);
 
@@ -67,9 +68,7 @@ exports.updateTask = async (id, taskToUpdate) => {
 
 exports.deleteTask = async (id) => {
   const task = await Task.findOne({
-    where: {
-      id,
-    },
+    where: { id },
   });
   await task.destroy();
 
