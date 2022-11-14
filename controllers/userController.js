@@ -1,5 +1,6 @@
 const userService = require('./../services/userService');
 const sendResponse = require('./../utilities/responseHandler');
+const helperMethods = require('./../utilities/helperMethods');
 
 exports.getUserByUserName = async (req, res, next) => {
   try {
@@ -14,7 +15,8 @@ exports.getUserByUserName = async (req, res, next) => {
 
 exports.getUsers = async (req, res, next) => {
   try {
-    const users = await userService.getUsers();
+    const { pageSize, pageNumber } = helperMethods.paginationHelper(req.query);
+    const users = await userService.getUsers(pageSize, pageNumber);
 
     return sendResponse(req, res, 200, users, 'Users Found', 'success');
   } catch (error) {
@@ -25,7 +27,8 @@ exports.getUsers = async (req, res, next) => {
 exports.getSpecificUsers = async (req, res, next) => {
   try {
     const userNameKey = req.params.userNameKey;
-    const users = await userService.getSpecificUsers(userNameKey);
+    const { pageSize, pageNumber } = helperMethods.paginationHelper(req.query);
+    const users = await userService.getSpecificUsers(userNameKey, pageSize, pageNumber);
 
     return sendResponse(req, res, 200, users, 'Users Found', 'success');
   } catch (error) {

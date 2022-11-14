@@ -26,19 +26,37 @@ exports.getUserById = async (id) => {
   return response;
 };
 
-exports.getUsers = async () => {
-  const users = await userRepository.getUsers();
-  const responses = users.map((user) => userDataVaidation.validateUserData(user));
+exports.getUsers = async (pageSize, pageNumber) => {
+  const users = await userRepository.getUsers(pageSize, pageNumber);
+  const usersCount = await userRepository.getUsersCount();
+  const totalPage = parseInt((Number(usersCount) + pageSize - 1) / pageSize);
+  const validatedUsers = users.map((user) => userDataVaidation.validateUserData(user));
 
-  return responses;
+  const response = {
+    data: validatedUsers,
+    pageNumber,
+    pageSize,
+    totalPage,
+  };
+
+  return response;
 };
 
-exports.getSpecificUsers = async (userNameKey) => {
+exports.getSpecificUsers = async (userNameKey, pageSize, pageNumber) => {
   if (!userNameKey) throw new BadRequestError();
-  const users = await userRepository.getSpecificUsers(userNameKey);
-  const responses = users.map((user) => userDataVaidation.validateUserData(user));
+  const users = await userRepository.getSpecificUsers(userNameKey, pageSize, pageNumber);
+  const usersCount = await userRepository.getSpecificUsersCount(userNameKey);
+  const totalPage = parseInt((Number(usersCount) + pageSize - 1) / pageSize);
+  const validatedUsers = users.map((user) => userDataVaidation.validateUserData(user));
 
-  return responses;
+  const response = {
+    data: validatedUsers,
+    pageNumber,
+    pageSize,
+    totalPage,
+  };
+
+  return response;
 };
 
 exports.createUser = async (userCreateData) => {

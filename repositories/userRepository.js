@@ -35,8 +35,10 @@ exports.getUserById = async (id) => {
   return user.dataValues;
 };
 
-exports.getUsers = async () => {
-  const users = await User.findAll();
+exports.getUsers = async (pageSize, pageNumber) => {
+  const offset = (pageNumber - 1) * pageSize;
+  const limit = pageSize;
+  const users = await User.findAll({ offset, limit });
   const usersData = users.map((el) => el.dataValues);
 
   return usersData;
@@ -50,8 +52,12 @@ exports.getUsersCount = async () => {
   return userCount[0].dataValues.id_count;
 };
 
-exports.getSpecificUsers = async (userNameKey) => {
+exports.getSpecificUsers = async (userNameKey, pageSize, pageNumber) => {
+  const offset = (pageNumber - 1) * pageSize;
+  const limit = pageSize;
   const users = await User.findAll({
+    offset,
+    limit,
     where: { userName: { [Sequelize.Op.substring]: userNameKey } },
   });
   const usersData = users.map((el) => el.dataValues);
