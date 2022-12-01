@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const userRouter = require('./routes/userRoute');
 const taskRouter = require('./routes/taskRoute');
+require('./database/models/association');
 const db = require('./database/config/dbConnect');
 const MethodNotAllowedError = require('./utilities/errors/MethodNotAllowedError');
 const globalErrorHandler = require('./utilities/errorHandler');
