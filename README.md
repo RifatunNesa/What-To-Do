@@ -12,7 +12,7 @@ WHAT TO DO allows users to create a personal account and create tasks or reminde
 Tasks can also be marked as finished or not.  
 &nbsp;
 
-Repository design pattern was implemented for this project so that the different parts are loosely coupled, hiding all complex implementation from on another, allowing scope for easy future development.
+Repository design pattern was implemented for this project, so that the different parts are loosely coupled, hiding all complex implementation from on another, allowing scope for easy future development.
 
 - [Repository Pattern With Javascript](https://dev.to/thanasismpalatsoukas/repository-pattern-with-javascript-4nl)  
   &nbsp;
@@ -33,7 +33,7 @@ Repository design pattern was implemented for this project so that the different
 
 - Only authenticated users can create, read, update and delete tasks.
 - Users can read, update and delete only their own tasks.
-- Implemented Repository pattern to divide the whole project into modular parts that are loosly coupled with each other allowing easy future development.
+- Implemented Repository pattern to divide the whole project into modular parts that are loosly coupled with each other, allowing easy future development.
 
   - Controllers
   - Services
